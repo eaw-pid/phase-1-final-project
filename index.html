@@ -6,9 +6,34 @@
         <script defer src="./index.js"></script>
     </head>
     <body>
-        <img class="cheers-image" src="./images/beer-panorama.jpg" alt="Cheers">
-
-
-
+        <header>
+        <div class="container">
+        <div class="header">
+                <img class="cheers-image" src="./images/beer-panorama.jpg" alt="Cheers">
+            <div class="text-container">
+                <h1>Find A Brewery</h1>
+            </div>
+        </div>
+        <div>
+        </header>
+            <h2>Search For Breweries By State</h2>
+        </div>
+        </div>
+        <div>
+            <form id="form">
+                <label>State:</label>
+                <input type="text" name="name" id="state-search"/>
+                <button id="seach-button">Search</button>
+            </form>
+        </div>
+        <div id="brew-list">
+            <h2>List of Breweries</h2>
+            <ul id="ul-list">
+            </ul>
+        </div>
+        <div id="brewery-info">
+            <h2>About the Brewery</h2>
+        </div>
+    
     </body>
 </html>
