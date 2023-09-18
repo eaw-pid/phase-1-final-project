@@ -15,44 +15,42 @@ function fetchData() {
 }
 
 function renderList(data) { 
+    //let states = data.forEach(item => )
     searchBar = searchForm.name.value
+    //I want to create an array of all the states within data objects. If search bar !== any items from that array return the alert
+    // if (searchBar.toLowerCase() !== data.state) {
+    //     alert("Try a Different State")
+    // } else {}
     const filteredBrew = data.filter(brew => brew.state.toLowerCase() === searchBar.toLowerCase())
+   
     filteredBrew.forEach((brew) => {
         let brewElement = document.createElement('li')
         brewElement.innerText = brew.name
+        brewElement.className="brew-element"
         brewElement.setAttribute('id', `${brew.id}`)
         brewList.append(brewElement)
         
-        brewElement.addEventListener('click', (e) => loadBrew())
+     
+        brewElement.addEventListener('click', (e) => brewData(brew))
     })
-   
-}
 
-function loadBrew(brew) {
-    let listItem = document.querySelector('li')
-    console.log(listItem)
     
-    fetch(`https://api.openbrewerydb.org/breweries/${listItem.id}`)
-    .then(res => res.json())
-    .then(data => {
-        
-        brewData(data)
-          
-    })
 }
 
-function brewData(data) {
+
+function brewData(brew) {
+    console.log(brew)
     let brewDiv = document.createElement('div')
     brewDiv.className = "brew-div"
-    brewDiv.setAttribute('id', `${data.id}`)
+    brewDiv.setAttribute('id', `${brew.id}`)
     
     brewDiv.innerHTML = `
-        <p>${data.address_1}<br>
-        ${data.city},${data.state} ${data.postal_code}</p
+        <p>${brew.street}<br>
+        ${brew.city},${brew.state} ${brew.postal_code}</p
         <br>
-        <p>${data.phone}</p>
+        <p>${brew.phone}</p>
         <br>
-        <a href=${data.website_url}>Website</a>
+        <a href=${brew.website_url}>Website</a>
         `
         
         brewInfo.append(brewDiv)
@@ -119,3 +117,14 @@ searchForm.addEventListener('submit', (e) => {
     // Have tried doing an if statement (if brewDiv.innerHTML === "")
     // then removeEventListener
     // I have tried remove childNode...
+
+    // dropDown.addEventListener('change', (e) => {
+    //     console.log('hi')
+    // })
+
+//     let brewElements = document.querySelectorAll('.brew-element')
+//     for (let brew of brewElements) {
+//     brew.addEventListener('click' ,(e) =>
+//     loadBrew()
+// )
+// }
