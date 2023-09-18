@@ -12,7 +12,6 @@ function fetchData() {
 .then(data => {
     brewList.innerHTML = ""
     renderList(data)
-    
 })
 }
 
@@ -21,10 +20,13 @@ function renderList(data) {
     const filteredBrew = data.filter(brew => brew.state.toLowerCase() === searchBar.toLowerCase())
     const filteredBrewByType = data.filter(brew => brew.brewery_type === dropDown.value)   
 
+    if (filteredBrew.length === 0) {
+        alert("Try Another State!")
+        return
+    }
     
     filteredBrew.forEach(brew => renderBrew(brew))
     filteredBrewByType.forEach(brew => renderBrew(brew))
-
 }
 
 function renderBrew(brew){
@@ -63,6 +65,7 @@ dropDown.addEventListener('change', (e) =>
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
     fetchData()
+    
 })
 
 
