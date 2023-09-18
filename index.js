@@ -2,7 +2,7 @@
 const brewList = document.querySelector('#ul-list')
 const brewInfo = document.querySelector('#brewery-info')
 const searchForm = document.querySelector("form")
-const dropDown = document.querySelector('dropdown')
+const dropDown = document.querySelector('#options')
 let searchBar
 
 
@@ -11,39 +11,35 @@ function fetchData() {
 .then(res => res.json())
 .then(data => {
     renderList(data)
+    
 })
 }
 
 function renderList(data) { 
-    //let states = data.forEach(item => )
     searchBar = searchForm.name.value
-    //I want to create an array of all the states within data objects. If search bar !== any items from that array return the alert
-    // if (searchBar.toLowerCase() !== data.state) {
-    //     alert("Try a Different State")
-    // } else {}
     const filteredBrew = data.filter(brew => brew.state.toLowerCase() === searchBar.toLowerCase())
-   
-    filteredBrew.forEach((brew) => {
-        let brewElement = document.createElement('li')
-        brewElement.innerText = brew.name
-        brewElement.className="brew-element"
-        brewElement.setAttribute('id', `${brew.id}`)
-        brewList.append(brewElement)
-        
-     
-        brewElement.addEventListener('click', (e) => brewData(brew))
-    })
+    const filteredBrewByType = data.filter(brew => brew.brewery_type === dropDown.value)   
 
-    
+    filteredBrew.forEach(brew => renderBrew(brew))
+    filteredBrewByType.forEach(brew => renderBrew(brew))
+
 }
 
+function renderBrew(brew){
+    let brewElement = document.createElement('li')
+    brewElement.innerText = brew.name
+    brewElement.className="brew-element"
+    brewElement.setAttribute('id', `${brew.id}`)
+    brewList.append(brewElement)
+    
+    brewElement.addEventListener('click', (e) => brewData(brew))
+}
 
 function brewData(brew) {
-    console.log(brew)
     let brewDiv = document.createElement('div')
+    brewDiv.innerHTML = ""
     brewDiv.className = "brew-div"
     brewDiv.setAttribute('id', `${brew.id}`)
-    
     brewDiv.innerHTML = `
         <p>${brew.street}<br>
         ${brew.city},${brew.state} ${brew.postal_code}</p
@@ -53,26 +49,21 @@ function brewData(brew) {
         <a href=${brew.website_url}>Website</a>
         `
         
-        brewInfo.append(brewDiv)
-        
-
-       // brewDiv.addEventListener('mouseover', (e) => showBrewType())
+        brewInfo.append(brewDiv)   
 }
 
-// function showBrewType() {
-//     let brewDiv = document.querySelector('.brew-div')
-//     let popupDiv = document.createElement('div')
-//     popupDiv.className = "popup-div"
-//     fetch(`https://api.openbrewerydb.org/breweries/${brewDiv.id}`)
-//     .then(res => res.json())
-//     .then(data => {
-//         popupDiv.textContent = `Brewery Type: ${data.brewery_type}`
-//         brewDiv.append(popupDiv)
-//         brewDiv.style.display = "block"
-//         //console.log(data)
-          
-//     })
+
+// function showBrewType(brew) {
+//     console.log(brew)
+
+
 // }
+
+dropDown.addEventListener('change', (e) => 
+    fetchData()
+)
+
+
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
     fetchData()
@@ -95,12 +86,6 @@ searchForm.addEventListener('submit', (e) => {
  */
 
  
-
-    // let brewAddress = document.createElement('p')
-    // let brewPhone = document.createElement('p')
-    // let brewUrl = document.createElement('a')
-    // let linkText = document.createTextNode("Website")
-
     // if (brewInfo.childNodes) {
         //     brewInfo.remove(brewInfo.childNodes);
         // } else {   }
