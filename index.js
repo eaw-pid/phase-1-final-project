@@ -10,6 +10,7 @@ function fetchData() {
     fetch("https://api.openbrewerydb.org/breweries")
 .then(res => res.json())
 .then(data => {
+    brewList.innerHTML = ""
     renderList(data)
     
 })
@@ -20,12 +21,14 @@ function renderList(data) {
     const filteredBrew = data.filter(brew => brew.state.toLowerCase() === searchBar.toLowerCase())
     const filteredBrewByType = data.filter(brew => brew.brewery_type === dropDown.value)   
 
+    
     filteredBrew.forEach(brew => renderBrew(brew))
     filteredBrewByType.forEach(brew => renderBrew(brew))
 
 }
 
 function renderBrew(brew){
+    
     let brewElement = document.createElement('li')
     brewElement.innerText = brew.name
     brewElement.className="brew-element"
@@ -36,8 +39,8 @@ function renderBrew(brew){
 }
 
 function brewData(brew) {
+    brewInfo.innerHTML=""
     let brewDiv = document.createElement('div')
-    brewDiv.innerHTML = ""
     brewDiv.className = "brew-div"
     brewDiv.setAttribute('id', `${brew.id}`)
     brewDiv.innerHTML = `
@@ -48,21 +51,14 @@ function brewData(brew) {
         <br>
         <a href=${brew.website_url}>Website</a>
         `
+        brewInfo.append(brewDiv)  
         
-        brewInfo.append(brewDiv)   
 }
 
-
-// function showBrewType(brew) {
-//     console.log(brew)
-
-
-// }
 
 dropDown.addEventListener('change', (e) => 
     fetchData()
 )
-
 
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
