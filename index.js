@@ -2,6 +2,7 @@
 const brewList = document.querySelector('#ul-list')
 const brewInfo = document.querySelector('#brewery-info')
 const searchForm = document.querySelector("form")
+const dropDown = document.querySelector('dropdown')
 let searchBar
 
 
@@ -30,29 +31,50 @@ function renderList(data) {
 function loadBrew(brew) {
     let listItem = document.querySelector('li')
     console.log(listItem)
+    
     fetch(`https://api.openbrewerydb.org/breweries/${listItem.id}`)
     .then(res => res.json())
     .then(data => {
+        
         brewData(data)
+          
     })
 }
 
 function brewData(data) {
     let brewDiv = document.createElement('div')
-    let brewAddress = document.createElement('p')
-    let brewPhone = document.createElement('p')
-    let brewUrl = document.createElement('a')
-    let linkText = document.createTextNode("Website")
- 
-    brewAddress.textContent = `${data.address_1} \n ${data.city}, \n ${data.state} \n ${data.postal_code}`
-    brewPhone.textContent = data.phone
-    brewUrl.href = data.website_url
-    //linkText.append(brewUrl)
-    brewDiv.append(brewAddress, brewPhone, linkText)
-    brewInfo.append(brewDiv)
+    brewDiv.className = "brew-div"
+    brewDiv.setAttribute('id', `${data.id}`)
+    
+    brewDiv.innerHTML = `
+        <p>${data.address_1}<br>
+        ${data.city},${data.state} ${data.postal_code}</p
+        <br>
+        <p>${data.phone}</p>
+        <br>
+        <a href=${data.website_url}>Website</a>
+        `
+        
+        brewInfo.append(brewDiv)
+        
+
+       // brewDiv.addEventListener('mouseover', (e) => showBrewType())
 }
 
-
+// function showBrewType() {
+//     let brewDiv = document.querySelector('.brew-div')
+//     let popupDiv = document.createElement('div')
+//     popupDiv.className = "popup-div"
+//     fetch(`https://api.openbrewerydb.org/breweries/${brewDiv.id}`)
+//     .then(res => res.json())
+//     .then(data => {
+//         popupDiv.textContent = `Brewery Type: ${data.brewery_type}`
+//         brewDiv.append(popupDiv)
+//         brewDiv.style.display = "block"
+//         //console.log(data)
+          
+//     })
+// }
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
     fetchData()
@@ -74,11 +96,26 @@ searchForm.addEventListener('submit', (e) => {
  * is lsited on the other side
  */
 
- //beerListItem =
-    //beerList.append(beerListItem)
+ 
 
-      //     console.log(brew.state)
-    //     console.log(`search bar: ${searchBar}`)   
-    //     if (brew.state === searchBar) {
-    //             console.log(filteredBrew)
-    //         }
+    // let brewAddress = document.createElement('p')
+    // let brewPhone = document.createElement('p')
+    // let brewUrl = document.createElement('a')
+    // let linkText = document.createTextNode("Website")
+
+    // if (brewInfo.childNodes) {
+        //     brewInfo.remove(brewInfo.childNodes);
+        // } else {   }
+
+
+          // brewAddress.textContent = `${data.address_1} \n ${data.city}, \n ${data.state} \n ${data.postal_code}`
+    // brewPhone.textContent = data.phone
+    // brewUrl.href = data.website_url
+    // //linkText.append(brewUrl)
+    // brewDiv.append(brewAddress, brewPhone, linkText)
+    // brewInfo.append(brewDiv)
+
+    // Have tried doing for each?
+    // Have tried doing an if statement (if brewDiv.innerHTML === "")
+    // then removeEventListener
+    // I have tried remove childNode...
