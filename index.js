@@ -20,7 +20,7 @@ function renderList(data) {
     searchBar = searchForm.name.value
     const filteredBrew = data.filter(brew => brew.state.toLowerCase() === searchBar.toLowerCase())
     const filteredBrewByType = data.filter(brew => brew.brewery_type === dropDown.value)   
-
+console.log('test')
     // if (filteredBrew.length === 0) {
     //     alert("Try Another State!")
     //     return
