@@ -1,4 +1,6 @@
 # Phase 1 Final Project
+
+Git URL: https://eaw-pid.github.io/phase-1-find-a-brewery/
 Core Deliverables:
 As a user, I can:
 •	Search for breweries using the ‘Search’ form to find breweries by State and get a list of breweries from that state
