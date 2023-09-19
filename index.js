@@ -5,13 +5,13 @@ const searchForm = document.querySelector("form")
 const dropDown = document.querySelector('#options')
 let searchBar
 
-
 function fetchData() {
     fetch("https://api.openbrewerydb.org/breweries")
 .then(res => res.json())
 .then(data => {
     brewList.innerHTML = ""
     renderList(data)
+    
 })
 }
 
@@ -23,10 +23,10 @@ function renderList(data) {
     if (filteredBrew.length === 0) {
         alert("Try Another State!")
         return
-    }
-    
+    }   
     filteredBrew.forEach(brew => renderBrew(brew))
     filteredBrewByType.forEach(brew => renderBrew(brew))
+
 }
 
 function renderBrew(brew){
@@ -54,9 +54,7 @@ function brewData(brew) {
         <a href=${brew.website_url}>Website</a>
         `
         brewInfo.append(brewDiv)  
-        
 }
-
 
 dropDown.addEventListener('change', (e) => 
     fetchData()
@@ -85,30 +83,3 @@ searchForm.addEventListener('submit', (e) => {
  */
 
  
-    // if (brewInfo.childNodes) {
-        //     brewInfo.remove(brewInfo.childNodes);
-        // } else {   }
-
-
-          // brewAddress.textContent = `${data.address_1} \n ${data.city}, \n ${data.state} \n ${data.postal_code}`
-    // brewPhone.textContent = data.phone
-    // brewUrl.href = data.website_url
-    // //linkText.append(brewUrl)
-    // brewDiv.append(brewAddress, brewPhone, linkText)
-    // brewInfo.append(brewDiv)
-
-    // Have tried doing for each?
-    // Have tried doing an if statement (if brewDiv.innerHTML === "")
-    // then removeEventListener
-    // I have tried remove childNode...
-
-    // dropDown.addEventListener('change', (e) => {
-    //     console.log('hi')
-    // })
-
-//     let brewElements = document.querySelectorAll('.brew-element')
-//     for (let brew of brewElements) {
-//     brew.addEventListener('click' ,(e) =>
-//     loadBrew()
-// )
-// }
